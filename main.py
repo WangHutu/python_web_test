@@ -27,10 +27,10 @@ def register():
     return registerLogin.register(request)
 
 
-# 开发板列表获取
-# @app.route('/getBoardList', methods=['GET'])
-# def register():
-#     return boards.getList(request)
+# 开发板类型获取
+@app.route('/getTypeList', methods=['POST'])
+def getTypeList():
+    return boards.getTypeList(request)
     
 
 

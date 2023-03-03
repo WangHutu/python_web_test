@@ -21,7 +21,9 @@ def insertDbData(db, collection, data):
     
 # 查询数据
 def getDbData(db, collection, data):
+    print(data, '传过来的data')
     if (data):
         return myclient[db][collection].find_one(data)
     else:
-        return myclient[db][collection].find({})
+        print('dw')
+        return myclient[db][collection].find()
