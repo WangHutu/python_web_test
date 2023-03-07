@@ -28,7 +28,7 @@ def register():
 
 
 # 开发板类型获取
-@app.route('/getTypeList', methods=['POST'])
+@app.route('/getTypeList', methods=['GET'])
 def getTypeList():
     return boards.getTypeList(request)
     
