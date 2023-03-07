@@ -9,9 +9,7 @@ def getTypeList(request):
     search = {"typeName": typeName} if typeName else False
     print(search,'search')
     dbType = db.getDbData('web_system_db', 'board_type_list', search)
-    print(dbType, 'board_type_list')
-    print(type(dbType), 'board_type_list')
-    return jsonify({"code": 200, "data": dbType})
+    return jsonify({"code": 200, "data": dbType.get('typeInfo')})
 
 
 def addTypeList(request):
