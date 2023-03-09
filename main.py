@@ -49,6 +49,12 @@ def updateTypeList():
 @app.route('/delTypeList', methods=['POST'])
 def delTypeList():
     return boards.delTypeList(request)
+
+
+# 开发板列表获取
+@app.route('/getBoardList', methods=['GET'])
+def getBoardList():
+    return boards.getBoardList(request)
     
 
 
