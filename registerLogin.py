@@ -8,7 +8,7 @@ def register(request):
     # 请求头是 json 用 request.get_data() 获取参数
     user = json.loads(request.get_data()).get('user')
     password = json.loads(request.get_data()).get('password')
-    state = db.insertDbData('web_system_db', 'users', {"user": user, "password": password})
+    state = db.insertDbData('web_system_db', 'users', {"user": user, "password": password}, {"user": user})
     if state:
         return jsonify({"code": 200, "message": "注册成功, 请登录"})
     else:

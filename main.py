@@ -31,6 +31,24 @@ def register():
 @app.route('/getTypeList', methods=['GET'])
 def getTypeList():
     return boards.getTypeList(request)
+
+
+# 开发板类型增加
+@app.route('/insertTypeList', methods=['POST'])
+def insertTypeList():
+    return boards.insertTypeList(request)
+
+
+# 开发板类型更新
+@app.route('/updateTypeList', methods=['POST'])
+def updateTypeList():
+    return boards.updateTypeList(request)
+
+
+# 开发板类型删除
+@app.route('/delTypeList', methods=['POST'])
+def delTypeList():
+    return boards.delTypeList(request)
     
 
 
