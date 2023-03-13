@@ -1,25 +1,8 @@
 import db
 import json
 from flask import jsonify
-
-def arrHandle(data, *args):
-    arr = []
-    state = type(data) is dict
-    if (state):
-        obj = {}
-        for i in list(args):
-            if not not i:
-                obj.update({i: data.get(i)})
-        arr.append(obj)
-    else:
-        data2 = list(data)
-        for item in data2:
-            obj = {}
-            for i in list(args):
-                if not not i:
-                    obj.update({i: item.get(i)})
-            arr.append(obj)
-    return arr
+import tools
+import logs
 
 
 def getTypeList(request):
@@ -27,7 +10,7 @@ def getTypeList(request):
     typeName = get_data.get('typeName')
     searchName = {"typeName" : { "$regex" : typeName}} if typeName else ''
     dbType = db.getDbData('web_system_db', 'board_type_list', searchName)
-    typeInfo = arrHandle(dbType, 'typeName', 'remark')
+    typeInfo = tools.arrHandle(dbType, 'typeName', 'remark', 'id')
     return jsonify({"code": 200, "data": {"typeInfo": typeInfo }})
 
 
@@ -37,7 +20,7 @@ def insertTypeList(request):
     typeName = json.loads(request.get_data()).get('typeName')
     remark = json.loads(request.get_data()).get('remark')
     state = db.insertDbData('web_system_db', 'board_type_list', {
-                            "typeName": typeName, "remark": remark}, {"typeName": typeName})
+                            "typeName": typeName, "remark": remark}, {"typeName": typeName}, 'typeName')
     if state:
         return jsonify({"code": 200, "message": "操作成功"})
     else:
@@ -58,7 +41,7 @@ def updateTypeList(request):
 
 def delTypeList(request):
     if (not json.loads(request.get_data())):
-        return jsonify({"code": 200, "message": "操作失败，无插入数据"})
+        return jsonify({"code": 200, "message": "操作失败，缺少相关数据"})
     typeName = json.loads(request.get_data()).get('typeName')
     remark = json.loads(request.get_data()).get('remark')
     state = db.delDbData('web_system_db', 'board_type_list', { "typeName": typeName, "remark": remark})
@@ -70,8 +53,7 @@ def delTypeList(request):
 
 def getBoardList(request):
     get_data = request.args.to_dict()
-    print(get_data, 'get_data')
-    type = {"type": get_data.get('type')} if get_data.get('type') else ""
+    type = {"type": {"$in": get_data.get('type').split(',')}} if get_data.get('type') else ""
     status = {"status": get_data.get('status')} if get_data.get('status') else ""
     ip = {"ip": {"$regex": get_data.get('ip')}} if get_data.get('ip') else ""
     arr = [type, status, ip]
@@ -80,5 +62,57 @@ def getBoardList(request):
         if not not item:
             searchName.update(item)
     dbType = db.getDbData('web_system_db', 'board_list', searchName)
-    typeInfo = arrHandle(dbType, 'type', 'status', 'ip')
+    typeInfo = tools.arrHandle(dbType, 'type', 'status', 'ip', 'remark', 'id')
     return jsonify({"code": 200, "data": {"boardInfo": typeInfo }})
+
+
+def insertBoardList(request):
+    if (not json.loads(request.get_data())):
+        return jsonify({"code": 200, "message": "操作失败，无插入数据"})
+    insertData = {
+        "type": json.loads(request.get_data()).get('type'),
+        "ip": json.loads(request.get_data()).get('ip'),
+        "status": json.loads(request.get_data()).get('status'),
+        "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else ""
+    }
+    state = db.insertDbData('web_system_db', 'board_list', insertData, {"ip": insertData.get('ip')}, 'ip')
+    if state:
+        # logs.insertLogList('add', insertData)
+        return jsonify({"code": 200, "message": "操作成功"})
+    else:
+        return jsonify({"code": 206, "message": "IP已存在！"})
+    
+
+def updateBoardList(request):
+    if (not json.loads(request.get_data())):
+        return jsonify({"code": 200, "message": "操作失败，无插入数据"})
+    oldIp = json.loads(request.get_data()).get('oldIp')
+    insertData = {
+        "type": json.loads(request.get_data()).get('type'),
+        "ip": json.loads(request.get_data()).get('ip'),
+        "status": json.loads(request.get_data()).get('status'),
+        "remark": json.loads(request.get_data()).get('remark')
+    }
+    oldData = db.getDbData('web_system_db', 'board_list', {"ip": oldIp})
+
+    state = db.updateDbData('web_system_db', 'board_list', insertData, {"ip": oldIp})
+    if state:
+        # logs.insertLogList('update', insertData, oldData)
+        return jsonify({"code": 200, "message": "操作成功"})
+    else:
+        return jsonify({"code": 400, "message": "操作失败"})
+
+
+def delBoardList(request):
+    if (not json.loads(request.get_data())):
+        return jsonify({"code": 200, "message": "操作失败，缺少相关数据"})
+    type = json.loads(request.get_data()).get('type')
+    ip = json.loads(request.get_data()).get('ip')
+    status = json.loads(request.get_data()).get('status')
+    remark = json.loads(request.get_data()).get('remark')
+    state = db.delDbData('web_system_db', 'board_list', {
+                            "type": type,"ip":ip, "status": status, "remark": remark})
+    if state:
+        return jsonify({"code": 200, "message": "操作成功"})
+    else:
+        return jsonify({"code": 400, "message": "操作失败"})

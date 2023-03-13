@@ -1,6 +1,7 @@
 from flask import Flask, request
 import registerLogin
 import boards
+import logs
 
 app = Flask(__name__)
 
@@ -57,6 +58,28 @@ def getBoardList():
     return boards.getBoardList(request)
     
 
+# 开发板列表增加
+@app.route('/insertBoardList', methods=['POST'])
+def insertBoardList():
+    return boards.insertBoardList(request)
+
+
+# 开发板列表更新
+@app.route('/updateBoardList', methods=['POST'])
+def updateBoardList():
+    return boards.updateBoardList(request)
+
+
+# 开发板列表删除
+@app.route('/delBoardList', methods=['POST'])
+def delBoardList():
+    return boards.delBoardList(request)
+
+
+# 日志列表获取
+@app.route('/getLogList', methods=['GET'])
+def getLogList():
+    return logs.getLogList(request)
 
 
 if __name__ == "__main__":

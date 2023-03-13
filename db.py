@@ -1,4 +1,5 @@
 import pymongo
+import uuid
 myclient = pymongo.MongoClient('mongodb://localhost:27017')
 
 def verify_db(db, collection):
@@ -9,16 +10,18 @@ def verify_db(db, collection):
         
 
 # 插入数据
-def insertDbData(db, collection, data, verifyData):
+def insertDbData(db, collection, data, verifyData='', attr=''):
     verify_db(db, collection)
     s = False
     if verifyData:
         verify = getDbData(db, collection, verifyData)
         datas = list(verify)
-        print(datas, 'datas')
         for item in datas:
-            s = item.get('typeName')
+            s = item.get(attr)
     if (not s):
+        print(data, 'data')
+        data.update({"id": str(uuid.uuid1())})
+        print(data, 'data')
         myclient[db][collection].insert_one(data) 
     return not s
     
@@ -33,8 +36,8 @@ def getDbData(db, collection, data):
     
 
 # 更新数据
-def updateDbData(db, collection, data, oriData):
-    myclient[db][collection].update_one(oriData, {"$set":data})
+def updateDbData(db, collection, data, serchData):
+    myclient[db][collection].update_one(serchData, {"$set":data})
     return True
 
 
