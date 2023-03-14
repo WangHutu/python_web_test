@@ -2,11 +2,12 @@ import db
 import json
 from flask import jsonify
 import tools
+import time
 
 def getLogList(request):
     get_data = request.args.to_dict()
     type = {"type": {"$in": get_data.get('type').split(',')}} if get_data.get('type') else ""
-    operate = {"operate": {"$in": get_data.get('operate').split(',')}} if get_data.get('operate') else ""
+    operate = {"operate": get_data.get('operate')} if get_data.get('operate') else ""
     ip = {"ip": {"$regex": get_data.get('ip')}} if get_data.get('ip') else ""
     user = {"user": {"$regex": get_data.get('user')}} if get_data.get('user') else ""
     arr = [type, operate, ip, user]
@@ -19,15 +20,22 @@ def getLogList(request):
     return jsonify({"code": 200, "data": {"boardInfo": typeInfo }})
 
 
-def insertLogList(opera, data, oldData):
-    listInfo = tools.arrHandle(data, 'type', 'ip', 'remark')
-    oldListInfo = tools.arrHandle(oldData,'id', 'type', 'ip', 'remark') if oldData else {"type": "", "ip": "", "remark": ""}
-    listInfo[0].update({"operate": opera})
-    if oldData:
-        listInfo[0].update({"oldType": oldListInfo[0].get('type')})
-        listInfo[0].update({"oldIp": oldListInfo[0].get('ip')})
-        listInfo[0].update({"oldRemark": oldListInfo[0].get('remark')})
+def insertLogList(opera, data, oldData=''):
+    newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark')
+    oldListInfo = tools.arrHandle(oldData, 'type', 'ip', 'remark') if not not oldData else [{"type": "", "ip": "", "remark": ""}]
     
-    print(listInfo, 'listInfolistInfo listInfo')
+    print(newListInfo, 'newListInfo')
+    print(oldListInfo, 'oldListInfo')
 
-    db.insertDbData('web_system_db', 'logs', listInfo[0])
+    insertData = {}
+    insertData.update({"operate": opera})
+    insertData.update({"time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())})
+    insertData.update({"type": oldListInfo[0].get('type')})
+    insertData.update({"ip": oldListInfo[0].get('ip')})
+    insertData.update({"remark": oldListInfo[0].get('remark')})
+
+    insertData.update({"newType": newListInfo[0].get('type')})
+    insertData.update({"newIp": newListInfo[0].get('ip')})
+    insertData.update({"newRemark": newListInfo[0].get('remark')})
+
+    db.insertDbData('web_system_db', 'logs', insertData)

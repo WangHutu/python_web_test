@@ -19,9 +19,7 @@ def insertDbData(db, collection, data, verifyData='', attr=''):
         for item in datas:
             s = item.get(attr)
     if (not s):
-        print(data, 'data')
         data.update({"id": str(uuid.uuid1())})
-        print(data, 'data')
         myclient[db][collection].insert_one(data) 
     return not s
     
