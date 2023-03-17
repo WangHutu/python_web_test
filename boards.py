@@ -12,7 +12,7 @@ def getTypeList(request):
     searchName = {"typeName" : { "$regex" : typeName}} if typeName else ''
     dbType = db.getDbData('web_system_db', 'board_type_list', searchName)
     typeInfo = tools.arrHandle(dbType, 'typeName', 'remark', 'id')
-    return jsonify({"code": 200, "data": {"typeInfo": typeInfo }})
+    return jsonify({"code": 200, "data": {"typeInfo": typeInfo, 'user':tools.getUser() }})
 
 
 def insertTypeList(request):
@@ -63,7 +63,7 @@ def getBoardList(request):
             searchName.update(item)
     dbType = db.getDbData('web_system_db', 'board_list', searchName)
     typeInfo = tools.arrHandle(dbType, 'type', 'status', 'ip', 'remark', 'id')
-    return jsonify({"code": 200, "data": {"boardInfo": typeInfo }})
+    return jsonify({"code": 200, "data": {"boardInfo": typeInfo, 'user':tools.getUser() }})
 
 
 def insertBoardList(request):

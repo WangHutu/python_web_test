@@ -17,7 +17,7 @@ def getLogList(request):
             searchName.update(item)
     dbType = db.getDbData('web_system_db', 'logs', searchName)
     typeInfo = tools.arrHandle(dbType, 'id', 'time', 'operate', 'user', 'ip', 'newIp', 'type', 'newType', "remark", "newRemark")
-    return jsonify({"code": 200, "data": {"boardInfo": typeInfo }})
+    return jsonify({"code": 200, "data": {"boardInfo": typeInfo, 'user':tools.getUser() }})
 
 
 def insertLogList(opera, data, oldData=''):

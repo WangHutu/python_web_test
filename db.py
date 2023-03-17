@@ -1,6 +1,9 @@
 import pymongo
 import uuid
-myclient = pymongo.MongoClient('mongodb://localhost:27017')
+
+mongodb_server = '10.176.178.2'
+mongodb_server_dev = 'localhost'
+myclient = pymongo.MongoClient('mongodb://%s:27017' % mongodb_server_dev)
 
 def verify_db(db, collection):
     list = myclient.list_database_names()

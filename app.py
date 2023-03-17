@@ -2,12 +2,9 @@ from flask import Flask, request
 import registerLogin
 import boards
 import logs
+import tools
 
-app = Flask(__name__)
-
-
-# 处理中文编码
-app.config['JSON_AS_ASCII'] = False
+app = tools.create_flask_app()
  
  
 # 跨域支持
@@ -83,5 +80,4 @@ def getLogList():
 
 
 if __name__ == "__main__":
-    app.config['JSON_AS_ASCII'] = False
-    app.run(debug=True)
+    app.run()

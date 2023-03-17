@@ -1,3 +1,6 @@
+from flask import Flask, request
+import os
+
 def arrHandle(data, *args):
     arr = []
     state = type(data) is dict
@@ -16,3 +19,14 @@ def arrHandle(data, *args):
                     obj.update({i: item.get(i)})
             arr.append(obj)
     return arr
+
+def create_flask_app():
+    app = Flask(__name__)
+
+    # 处理中文编码
+    app.config['JSON_AS_ASCII'] = False
+    return app
+
+
+def getUser():
+    return os.getlogin()
