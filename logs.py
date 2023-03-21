@@ -22,7 +22,7 @@ def getLogList(request):
 
 def insertLogList(opera, data, oldData=''):
     newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark', 'user')
-    oldListInfo = tools.arrHandle(oldData, 'type', 'ip', 'remark') if not not oldData else [{"type": "", "ip": "", "remark": ""}]
+    oldListInfo = tools.arrHandle(oldData, 'type', 'ip', 'remark') if not not oldData else False
     
     print(newListInfo, 'newListInfo')
     print(oldListInfo, 'oldListInfo')
@@ -30,9 +30,10 @@ def insertLogList(opera, data, oldData=''):
     insertData = {}
     insertData.update({"operate": opera})
     insertData.update({"time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())})
-    insertData.update({"type": oldListInfo[0].get('type')})
-    insertData.update({"ip": oldListInfo[0].get('ip')})
-    insertData.update({"remark": oldListInfo[0].get('remark')})
+    if not not oldListInfo:
+        insertData.update({"type": oldListInfo[0].get('type')})
+        insertData.update({"ip": oldListInfo[0].get('ip')})
+        insertData.update({"remark": oldListInfo[0].get('remark')})
 
     insertData.update({"newType": newListInfo[0].get('type')})
     insertData.update({"newIp": newListInfo[0].get('ip')})

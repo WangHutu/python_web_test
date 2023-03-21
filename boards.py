@@ -96,7 +96,6 @@ def updateBoardList(request):
         "remark": json.loads(request.get_data()).get('remark')
     }
     oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
-    print(tools.arrHandle(oldData), 'oldData')
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
     if state:
         logs.insertLogList('update', insertData, oldData)
@@ -109,8 +108,10 @@ def delBoardList(request):
     if (not json.loads(request.get_data())):
         return jsonify({"code": 200, "message": "操作失败，缺少相关数据"})
     id = json.loads(request.get_data()).get('id')
+    delData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
     state = db.delDbData('web_system_db', 'board_list', {"id": id})
     if state:
+        logs.insertLogList('del', delData)
         return jsonify({"code": 200, "message": "操作成功"})
     else:
         return jsonify({"code": 400, "message": "操作失败"})
