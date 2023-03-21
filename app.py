@@ -73,6 +73,18 @@ def delBoardList():
     return boards.delBoardList(request)
 
 
+# 占用开发板
+@app.route('/occBoard', methods=['POST'])
+def occBoard():
+    return boards.occBoard(request)
+
+
+# 释放开发板
+@app.route('/reBoard', methods=['POST'])
+def reBoard():
+    return boards.reBoard(request)
+
+
 # 日志列表获取
 @app.route('/getLogList', methods=['GET'])
 def getLogList():

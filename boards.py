@@ -61,9 +61,10 @@ def getBoardList(request):
     for item in arr:
         if not not item:
             searchName.update(item)
-    dbType = db.getDbData('web_system_db', 'board_list', searchName)
-    typeInfo = tools.arrHandle(dbType, 'type', 'status', 'ip', 'remark', 'id')
-    return jsonify({"code": 200, "data": {"boardInfo": typeInfo, 'user':tools.getUser() }})
+    dbBoard = db.getDbData('web_system_db', 'board_list', searchName)
+    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'remark', 'id', 'user')
+    print(boardInfo, 'boardInfo')
+    return jsonify({"code": 200, "data": {"boardInfo": boardInfo, 'user':tools.getUser() }})
 
 
 def insertBoardList(request):
@@ -110,6 +111,48 @@ def delBoardList(request):
     id = json.loads(request.get_data()).get('id')
     state = db.delDbData('web_system_db', 'board_list', {"id": id})
     if state:
+        return jsonify({"code": 200, "message": "操作成功"})
+    else:
+        return jsonify({"code": 400, "message": "操作失败"})
+    
+
+
+def occBoard(request):
+    if (not json.loads(request.get_data())):
+        return jsonify({"code": 200, "message": "操作失败，缺少相关数据"})
+    id = json.loads(request.get_data()).get('id')
+    insertData = {
+        "type": json.loads(request.get_data()).get('type'),
+        "ip": json.loads(request.get_data()).get('ip'),
+        "status": json.loads(request.get_data()).get('status'),
+        "remark": json.loads(request.get_data()).get('remark'),
+        "user": json.loads(request.get_data()).get('user')
+    }
+    oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
+    state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
+    if state:
+        logs.insertLogList('occupancy', insertData, oldData)
+        return jsonify({"code": 200, "message": "操作成功"})
+    else:
+        return jsonify({"code": 400, "message": "操作失败"})
+    
+
+
+def reBoard(request):
+    if (not json.loads(request.get_data())):
+        return jsonify({"code": 200, "message": "操作失败，缺少相关数据"})
+    id = json.loads(request.get_data()).get('id')
+    insertData = {
+        "type": json.loads(request.get_data()).get('type'),
+        "ip": json.loads(request.get_data()).get('ip'),
+        "status": json.loads(request.get_data()).get('status'),
+        "remark": json.loads(request.get_data()).get('remark'),
+        "user": ""
+    }
+    oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
+    state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
+    if state:
+        logs.insertLogList('release', insertData, oldData)
         return jsonify({"code": 200, "message": "操作成功"})
     else:
         return jsonify({"code": 400, "message": "操作失败"})
