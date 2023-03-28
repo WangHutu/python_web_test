@@ -30,6 +30,6 @@ def create_flask_app():
 
 
 def getUser():
-    name = subprocess.check_output(['./getname.sh'])
+    name = subprocess.check_output(['sh', './getname.sh'])
     print('name是:', name.decode().strip())
     return name.decode().strip()
