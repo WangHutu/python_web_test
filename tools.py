@@ -1,5 +1,6 @@
 from flask import Flask, request
 import os
+import subprocess
 
 def arrHandle(data, *args):
     arr = []
@@ -29,4 +30,6 @@ def create_flask_app():
 
 
 def getUser():
-    return os.getlogin()
+    name = subprocess.check_output(['./getname.sh'])
+    print('name是:', name.decode().strip())
+    return name.decode().strip()
