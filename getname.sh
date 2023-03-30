@@ -1,3 +1,3 @@
 #!/bin/bash
-current_user=$(whoami)
+current_user=$USER
 echo $current_user
