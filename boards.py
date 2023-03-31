@@ -62,7 +62,7 @@ def getBoardList(request):
         if not not item:
             searchName.update(item)
     dbBoard = db.getDbData('web_system_db', 'board_list', searchName)
-    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'remark', 'id', 'user')
+    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'remark', 'id', 'user')
     print(boardInfo, 'boardInfo')
     return jsonify({"code": 200, "data": {"boardInfo": boardInfo, 'user':tools.getUser() }})
 
@@ -73,6 +73,7 @@ def insertBoardList(request):
     insertData = {
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
+        "number": json.loads(request.get_data()).get('number'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else ""
     }
@@ -92,6 +93,7 @@ def updateBoardList(request):
     insertData = {
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
+        "number": json.loads(request.get_data()).get('number'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark')
     }
@@ -125,6 +127,7 @@ def occBoard(request):
     insertData = {
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
+        "number": json.loads(request.get_data()).get('number'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
         "user": json.loads(request.get_data()).get('user')
@@ -146,6 +149,7 @@ def reBoard(request):
     insertData = {
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
+        "number": json.loads(request.get_data()).get('number'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
         "user": ""
