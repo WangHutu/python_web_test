@@ -75,7 +75,8 @@ def insertBoardList(request):
         "ip": json.loads(request.get_data()).get('ip'),
         "number": json.loads(request.get_data()).get('number'),
         "status": json.loads(request.get_data()).get('status'),
-        "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else ""
+        "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else "",
+        "user": json.loads(request.get_data()).get('user')
     }
     state = db.insertDbData('web_system_db', 'board_list', insertData, {"ip": insertData.get('ip')}, 'ip')
     if state:
@@ -95,7 +96,8 @@ def updateBoardList(request):
         "ip": json.loads(request.get_data()).get('ip'),
         "number": json.loads(request.get_data()).get('number'),
         "status": json.loads(request.get_data()).get('status'),
-        "remark": json.loads(request.get_data()).get('remark')
+        "remark": json.loads(request.get_data()).get('remark'),
+        "user": json.loads(request.get_data()).get('user')
     }
     oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
