@@ -62,7 +62,7 @@ def getBoardList(request):
         if not not item:
             searchName.update(item)
     dbBoard = db.getDbData('web_system_db', 'board_list', searchName)
-    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'remark', 'id', 'user')
+    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'image', 'remark', 'id', 'user')
     print(boardInfo, 'boardInfo')
     return jsonify({"code": 200, "data": {"boardInfo": boardInfo, 'user':tools.getUser() }})
 
@@ -74,6 +74,7 @@ def insertBoardList(request):
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
         "number": json.loads(request.get_data()).get('number'),
+        "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else "",
         "user": json.loads(request.get_data()).get('user')
@@ -95,6 +96,7 @@ def updateBoardList(request):
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
         "number": json.loads(request.get_data()).get('number'),
+        "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
         "user": json.loads(request.get_data()).get('user')
@@ -130,6 +132,7 @@ def occBoard(request):
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
         "number": json.loads(request.get_data()).get('number'),
+        "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
         "user": json.loads(request.get_data()).get('user')
@@ -152,6 +155,7 @@ def reBoard(request):
         "type": json.loads(request.get_data()).get('type'),
         "ip": json.loads(request.get_data()).get('ip'),
         "number": json.loads(request.get_data()).get('number'),
+        "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
         "user": ""
