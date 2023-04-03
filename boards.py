@@ -78,7 +78,8 @@ def insertBoardList(request):
         "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else "",
-        "user": json.loads(request.get_data()).get('user')
+        "user": json.loads(request.get_data()).get('user'),
+        "startTime": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) if json.loads(request.get_data()).get('status') == 'occupy' else ""
     }
     state = db.insertDbData('web_system_db', 'board_list', insertData, {"ip": insertData.get('ip')}, 'ip')
     if state:
