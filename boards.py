@@ -4,6 +4,7 @@ from flask import jsonify
 import tools
 import logs
 import copy
+import time
 
 
 def getTypeList(request):
@@ -23,7 +24,7 @@ def insertTypeList(request):
     state = db.insertDbData('web_system_db', 'board_type_list', {
                             "typeName": typeName, "remark": remark}, {"typeName": typeName}, 'typeName')
     if state:
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
         return jsonify({"code": 205, "message": "该类型已存在！"})
 
@@ -35,9 +36,9 @@ def updateTypeList(request):
     remark = json.loads(request.get_data()).get('remark')
     state = db.updateDbData('web_system_db', 'board_type_list', {"remark": remark}, {"id": id})
     if state:
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
-        return jsonify({"code": 400, "message": "操作失败"})
+        return jsonify({"code": 400, "message": "Error"})
 
 
 def delTypeList(request):
@@ -46,9 +47,9 @@ def delTypeList(request):
     id = json.loads(request.get_data()).get('id')
     state = db.delDbData('web_system_db', 'board_type_list', { "id": id})
     if state:
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
-        return jsonify({"code": 400, "message": "操作失败"})
+        return jsonify({"code": 400, "message": "Error"})
     
 
 def getBoardList(request):
@@ -62,7 +63,7 @@ def getBoardList(request):
         if not not item:
             searchName.update(item)
     dbBoard = db.getDbData('web_system_db', 'board_list', searchName)
-    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'image', 'remark', 'id', 'user')
+    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'image', 'remark', 'id', 'user', 'startTime')
     print(boardInfo, 'boardInfo')
     return jsonify({"code": 200, "data": {"boardInfo": boardInfo, 'user':tools.getUser() }})
 
@@ -82,7 +83,7 @@ def insertBoardList(request):
     state = db.insertDbData('web_system_db', 'board_list', insertData, {"ip": insertData.get('ip')}, 'ip')
     if state:
         logs.insertLogList('add', insertData)
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
         return jsonify({"code": 206, "message": "IP已存在 !"})
     
@@ -105,9 +106,9 @@ def updateBoardList(request):
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
     if state:
         logs.insertLogList('update', insertData, oldData)
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
-        return jsonify({"code": 400, "message": "操作失败"})
+        return jsonify({"code": 400, "message": "Error"})
 
 
 def delBoardList(request):
@@ -118,9 +119,9 @@ def delBoardList(request):
     state = db.delDbData('web_system_db', 'board_list', {"id": id})
     if state:
         logs.insertLogList('del', delData)
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
-        return jsonify({"code": 400, "message": "操作失败"})
+        return jsonify({"code": 400, "message": "Error"})
     
 
 
@@ -135,15 +136,16 @@ def occBoard(request):
         "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
-        "user": json.loads(request.get_data()).get('user')
+        "user": json.loads(request.get_data()).get('user'),
+        "startTime": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     }
     oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
     if state:
         logs.insertLogList('occupancy', insertData, oldData)
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
-        return jsonify({"code": 400, "message": "操作失败"})
+        return jsonify({"code": 400, "message": "Error"})
     
 
 
@@ -164,6 +166,6 @@ def reBoard(request):
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
     if state:
         logs.insertLogList('release', insertData, oldData)
-        return jsonify({"code": 200, "message": "操作成功"})
+        return jsonify({"code": 200, "message": "Success"})
     else:
-        return jsonify({"code": 400, "message": "操作失败"})
+        return jsonify({"code": 400, "message": "Error"})
