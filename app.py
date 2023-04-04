@@ -1,6 +1,7 @@
 from flask import Flask, request
 import registerLogin
 import boards
+import admins
 import logs
 import tools
 
@@ -89,6 +90,29 @@ def reBoard():
 @app.route('/getLogList', methods=['GET'])
 def getLogList():
     return logs.getLogList(request)
+
+# Admin获取
+@app.route('/getAdminList', methods=['GET'])
+def getAdminList():
+    return admins.getAdminList(request)
+
+
+# Admin增加
+@app.route('/insertAdminList', methods=['POST'])
+def insertAdminList():
+    return admins.insertAdminList(request)
+
+
+# Admin更新
+@app.route('/updateAdminList', methods=['POST'])
+def updateAdminList():
+    return admins.updateAdminList(request)
+
+
+# Admin删除
+@app.route('/delAdminList', methods=['POST'])
+def delAdminList():
+    return admins.delAdminList(request)
 
 
 if __name__ == "__main__":
