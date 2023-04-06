@@ -2,9 +2,6 @@ import db
 import json
 from flask import jsonify
 import tools
-import logs
-import copy
-import time
 
 
 def getAdminList(request):

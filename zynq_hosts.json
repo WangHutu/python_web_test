@@ -1,0 +1,181 @@
+{
+    "10.176.179.103": {
+      "power": {
+        "strip_type": "ApcAP8930PDU",
+        "outlet": "17",
+        "strip_addr": "xbjlabdppduj1a"
+      },
+      "board": "kv260"
+    },
+    "10.176.179.104": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "15",
+          "strip_addr": "xbjlabdppduj1a"
+        },
+        "board": "kv260"
+      },
+      "10.176.179.108": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "11",
+          "strip_addr": "xbjlabdppduj1a"
+        },
+        "board": "kv260"
+      },
+      "10.176.178.80": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "1",
+          "strip_addr": "xbjlabdppduj2b"
+        },
+        "board": "vek280"
+      },
+      "10.176.178.81": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "5",
+          "strip_addr": "xbjlabdppduj2b"
+        },
+        "board": "vek280"
+      },
+      "10.176.178.82": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "1",
+          "strip_addr": "xbjlabdppduj4b"
+        },
+        "board": "vek280"
+      },
+      "10.176.178.83": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "4",
+          "strip_addr": "xbjlabdppduj4b"
+        },
+        "board": "vek280"
+      },
+      "10.176.178.101": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "1",
+          "strip_addr": "xbjlabdppduj3b"
+        },
+        "board": "zcu102"
+      },
+      "10.176.178.102": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "2",
+          "strip_addr": "xbjlabdppduj3b"
+        },
+        "board": "zcu102"
+      },
+      "10.176.178.190": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "3",
+          "strip_addr": "xbjlabdppduj2b"
+        },
+        "board": "vck190"
+      },
+      "10.176.178.192": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "6",
+          "strip_addr": "xbjlabdppduj3a"
+        },
+        "board": "vck190"
+      },
+      "10.176.178.193": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "6",
+          "strip_addr": "xbjlabdppduj2b"
+        },
+        "board": "vck190"
+      },
+      "10.176.179.99": {
+        "mac_addr": "00:0A:35:07:9F:A8",
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "6",
+          "strip_addr": "xbjlabdppduj1a"
+        },
+        "server":"xbjlabdpsvr19",
+        "serial":"/dev/ttyUSB0",
+        "board": "zcu102"
+      },
+      "10.176.179.73": {
+        "mac_addr": "00:0A:35:07:9F:08",
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "4",
+          "strip_addr": "xbjlabdppduj1a"
+        },
+        "server":"xbjlabdpsvr20",
+        "serial":"/dev/ttyUSB1",
+        "jtag":"/dev/ttyUSB3",
+        "board": "vck190"
+      },
+      "10.176.179.79": {
+        "mac_addr": "00:0A:35:07:9F:28",
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "1",
+          "strip_addr": "xbjlabdppduj1b"
+        },
+        "server":"xbjlabdpsvr17",
+        "serial":"/dev/ttyUSB1",
+        "jtag":"/dev/ttyUSB3",
+        "board": "vek280-es1"
+    },
+    "10.176.179.78": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "7",
+          "strip_addr": "xbjlabdppduj2b"
+        },
+        "board": "vek280-es1"
+    },
+    "10.176.178.84": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "1",
+          "strip_addr": "xbjlabdppduj3a"
+        },
+        "board": "vek280-es1"
+    },
+    "10.176.179.97": {
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "7",
+          "strip_addr": "xbjlabdppduj2a"
+        },
+        "board": "vek280"
+    },
+    "10.176.179.95": {
+        "mac_addr": "00:0A:35:07:9F:38",
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "1",
+          "strip_addr": "xbjlabdppduh3a"
+        },
+        "server":"xbjlabdpsvr01",
+        "serial":"/dev/ttyUSB1",
+        "jtag":"/dev/ttyUSB3",
+        "board": "vek280"
+    },
+    "10.176.179.98": {
+        "mac_addr": "00:0A:35:07:9F:48",
+        "power": {
+          "strip_type": "ApcAP8930PDU",
+          "outlet": "2",
+          "strip_addr": "xbjlabdppduh3a"
+        },
+        "server":"xbjlabdpsvr02",
+        "serial":"/dev/ttyUSB1",
+        "jtag":"/dev/ttyUSB3",
+        "board": "vek280"
+    }
+}

@@ -3,6 +3,7 @@ import registerLogin
 import boards
 import admins
 import logs
+import power
 import tools
 
 app = tools.create_flask_app()
@@ -113,6 +114,18 @@ def updateAdminList():
 @app.route('/delAdminList', methods=['POST'])
 def delAdminList():
     return admins.delAdminList(request)
+
+
+# power ip 列表
+@app.route('/getPowerList', methods=['GET'])
+def powerList():
+    return power.getPowerList(request)
+
+
+# restartBoard
+@app.route('/restartBoard', methods=['POST'])
+def restartBoard():
+    return power.restartBoard(request)
 
 
 if __name__ == "__main__":

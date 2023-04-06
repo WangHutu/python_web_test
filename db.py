@@ -31,10 +31,10 @@ def insertDbData(db, collection, data, verifyData='', attr=''):
 # 查询数据
 def getDbData(db, collection, data):
     if (data):
-        print('数据库查出的数据1', myclient[db].get_collection(collection).find(data))
+        # print('数据库查出的数据1', myclient[db].get_collection(collection).find(data))
         return myclient[db].get_collection(collection).find(data)
     else:
-        print('数据库查出的数据2', myclient[db][collection].find())
+        # print('数据库查出的数据2', myclient[db][collection].find())
         return myclient[db][collection].find()
     
 
