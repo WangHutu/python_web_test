@@ -63,7 +63,7 @@ def getBoardList(request):
         if not not item:
             searchName.update(item)
     dbBoard = db.getDbData('web_system_db', 'board_list', searchName)
-    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'image', 'remark', 'id', 'user', 'startTime')
+    boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'image', 'remark', 'id', 'user', 'startTime', 'opearUser')
     print(boardInfo, 'boardInfo')
     return jsonify({"code": 200, "data": {"boardInfo": boardInfo, 'user':tools.getUser() }})
 
@@ -79,6 +79,7 @@ def insertBoardList(request):
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark') if json.loads(request.get_data()).get('remark') else "",
         "user": json.loads(request.get_data()).get('user'),
+        "opearUser": json.loads(request.get_data()).get('opearUser'),
         "startTime": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) if json.loads(request.get_data()).get('status') == 'occupy' else ""
     }
     state = db.insertDbData('web_system_db', 'board_list', insertData, {"ip": insertData.get('ip')}, 'ip')
@@ -101,7 +102,8 @@ def updateBoardList(request):
         "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
-        "user": json.loads(request.get_data()).get('user')
+        "user": json.loads(request.get_data()).get('user'),
+        "opearUser": json.loads(request.get_data()).get('opearUser'),
     }
     oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})
@@ -138,6 +140,7 @@ def occBoard(request):
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
         "user": json.loads(request.get_data()).get('user'),
+        "opearUser": json.loads(request.get_data()).get('opearUser'),
         "startTime": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     }
     oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
@@ -161,7 +164,8 @@ def reBoard(request):
         "image": json.loads(request.get_data()).get('image'),
         "status": json.loads(request.get_data()).get('status'),
         "remark": json.loads(request.get_data()).get('remark'),
-        "user": ""
+        "user": "",
+        "opearUser": json.loads(request.get_data()).get('opearUser'),
     }
     oldData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
     state = db.updateDbData('web_system_db', 'board_list', insertData, {"id": id})

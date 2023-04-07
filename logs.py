@@ -16,12 +16,12 @@ def getLogList(request):
         if not not item:
             searchName.update(item)
     dbType = db.getDbData('web_system_db', 'logs', searchName)
-    typeInfo = tools.arrHandle(dbType, 'id', 'time', 'operate', 'user', 'ip', 'newIp','image', 'newImage', 'number', 'newNumber', 'type', 'newType', "remark", "newRemark")
+    typeInfo = tools.arrHandle(dbType, 'id', 'time', 'operate', 'user', 'ip', 'newIp','image', 'newImage', 'number', 'newNumber', 'type', 'newType', "remark", "newRemark", 'opearUser')
     return jsonify({"code": 200, "data": {"boardInfo": typeInfo, 'user':tools.getUser() }})
 
 
 def insertLogList(opera, data, oldData=''):
-    newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark', 'image', 'number', 'user')
+    newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark', 'image', 'number', 'user', 'opearUser')
     oldListInfo = tools.arrHandle(oldData, 'type', 'ip', 'remark', 'image', 'number') if not not oldData else False
     
     print(newListInfo, 'newListInfo')
@@ -43,5 +43,6 @@ def insertLogList(opera, data, oldData=''):
     insertData.update({"newImage": newListInfo[0].get('image')})
     insertData.update({"newRemark": newListInfo[0].get('remark')})
     insertData.update({"user": newListInfo[0].get('user')})
+    insertData.update({"opearUser": newListInfo[0].get('opearUser')})
 
     db.insertDbData('web_system_db', 'logs', insertData)
