@@ -37,10 +37,10 @@ def getUser():
 
 def restart(arg1, arg2):
     # 设置脚本路径和参数
-    script_path = 'sh ./restart.sh'
+    script_path = './restart.sh'
 
     # 执行脚本并获取输出结果
-    output = subprocess.run([script_path, arg1, arg2], capture_output=True, text=True)
+    output = subprocess.run(['sh', script_path, arg1, arg2], capture_output=True, text=True)
 
     # 将输出结果发送回前端
     return output.stdout
