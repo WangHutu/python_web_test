@@ -4,6 +4,7 @@ import boards
 import admins
 import logs
 import power
+import reimage
 import tools
 
 app = tools.create_flask_app()
@@ -126,6 +127,11 @@ def powerList():
 @app.route('/restartBoard', methods=['POST'])
 def restartBoard():
     return power.restartBoard(request)
+
+# restartImage
+@app.route('/restartImage', methods=['POST'])
+def restartImage():
+    return reimage.restartImage(request)
 
 
 if __name__ == "__main__":
