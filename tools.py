@@ -32,7 +32,7 @@ def create_flask_app():
 
 def getUser():
     name = subprocess.check_output(['sh', './getname.sh'])
-    print('name是:', name.decode().strip())
+    # print('name是:', name.decode().strip())
     return name.decode().strip()
 
 
@@ -50,7 +50,7 @@ def restart(arg1, arg2):
 def reimage(arg1, arg2):
     # 设置脚本路径和参数
     script_path = './reImage.sh'
-
+    print(f'所执行的脚本： sh ${script_path} ${arg1} ${arg2}')
     # 执行脚本并获取输出结果
     output = subprocess.run(['sh', script_path, arg1, arg2], capture_output=True, text=True)
 

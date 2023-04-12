@@ -24,8 +24,8 @@ def insertLogList(opera, data, oldData=''):
     newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark', 'image', 'number', 'user', 'opearUser')
     oldListInfo = tools.arrHandle(oldData, 'type', 'ip', 'remark', 'image', 'number') if not not oldData else False
     
-    print(newListInfo, 'newListInfo')
-    print(oldListInfo, 'oldListInfo')
+    # print(newListInfo, 'newListInfo')
+    # print(oldListInfo, 'oldListInfo')
 
     insertData = {}
     insertData.update({"operate": opera})

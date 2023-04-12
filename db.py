@@ -20,7 +20,7 @@ def insertDbData(db, collection, data, verifyData='', attr=''):
     if verifyData:
         verify = getDbData(db, collection, verifyData)
         datas = list(verify)
-        print(datas, 'datas')
+        # print(datas, 'datas')
         for item in datas:
             s = item.get(attr)
     if (not s):

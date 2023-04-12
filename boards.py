@@ -64,7 +64,7 @@ def getBoardList(request):
             searchName.update(item)
     dbBoard = db.getDbData('web_system_db', 'board_list', searchName)
     boardInfo = tools.arrHandle(dbBoard, 'type', 'status', 'ip', 'number', 'image', 'remark', 'id', 'user', 'startTime', 'opearUser')
-    print(boardInfo, 'boardInfo')
+    # print(boardInfo, 'boardInfo')
     return jsonify({"code": 200, "data": {"boardInfo": boardInfo, 'user':tools.getUser() }})
 
 

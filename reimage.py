@@ -8,7 +8,7 @@ def restartImage(request):
     print(ip, 'ip')
     print(path, 'path')
     if ip and path:
-        res = tools.restart(path, ip)
+        res = tools.reimage(path, ip)
     else:
         res = 'ip or path not found'
     return jsonify({"code": 200, "data": {"restartImage": res, 'user':tools.getUser() }})
