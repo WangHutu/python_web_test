@@ -45,6 +45,9 @@ def updateDbData(db, collection, data, serchData):
 
 
 # 删除数据
-def delDbData(db, collection, data):
-    myclient[db][collection].delete_one(data)
+def delDbData(db, collection, data=''):
+    if not not data:
+        myclient[db][collection].delete_one(data)
+    else:
+        myclient[db][collection].delete_many({})
     return True

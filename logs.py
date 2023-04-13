@@ -46,3 +46,12 @@ def insertLogList(opera, data, oldData=''):
     insertData.update({"opearUser": newListInfo[0].get('opearUser')})
 
     db.insertDbData('web_system_db', 'logs', insertData)
+
+
+
+def clearList(request):
+    state = db.delDbData('web_system_db', 'logs')
+    if state:
+        return jsonify({"code": 200, "message": "Success"})
+    else:
+        return jsonify({"code": 400, "message": "Error"})

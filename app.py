@@ -93,6 +93,13 @@ def reBoard():
 def getLogList():
     return logs.getLogList(request)
 
+
+# 日志列表清除
+@app.route('/clearList', methods=['POST'])
+def clearList():
+    return logs.clearList(request)
+
+
 # Admin获取
 @app.route('/getAdminList', methods=['GET'])
 def getAdminList():
