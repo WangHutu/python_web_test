@@ -16,7 +16,9 @@ def getPowerList(request):
 def restartBoard(request):
     ip = json.loads(request.get_data()).get('ip')
     id = json.loads(request.get_data()).get('id')
-    insertData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
+    opearUser = json.loads(request.get_data()).get('opearUser')
+    insertData = list(db.getDbData('web_system_db', 'board_list', {"id": id}))
+    insertData[0].update({'opearUser':opearUser})
     with open('zynq_hosts.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
         for key in data.keys():
