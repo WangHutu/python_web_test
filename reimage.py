@@ -11,9 +11,10 @@ def restartImage(request):
     path = json.loads(request.get_data()).get('image')
     insertData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
     if ip and path:
-        res = tools.reimage(path, ip)
+        res = tools.reimage2(path, ip)
         logs.insertLogList('flashImage', insertData)
+        return jsonify({"code": 200, "data": {"restartImage": '', 'user':tools.getUser() }})
     else:
         res = 'ip or path not found'
-    return jsonify({"code": 200, "data": {"restartImage": res, 'user':tools.getUser() }})
+        return jsonify({"code": 200, "data": {"restartImage": res, 'user':tools.getUser() }})
     
