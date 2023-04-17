@@ -21,7 +21,7 @@ def getLogList(request):
 
 
 def insertLogList(opera, data, oldData=''):
-    newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark', 'image', 'number', 'user', 'opearUser')
+    newListInfo = tools.arrHandle(data, 'type', 'ip', 'remark', 'image', 'number', 'user', 'opearUser', 'flashLog', 'flashTime')
     oldListInfo = tools.arrHandle(oldData, 'type', 'ip', 'remark', 'image', 'number') if not not oldData else False
     
     # print(newListInfo, 'newListInfo')
@@ -44,6 +44,8 @@ def insertLogList(opera, data, oldData=''):
     insertData.update({"newRemark": newListInfo[0].get('remark')})
     insertData.update({"user": newListInfo[0].get('user')})
     insertData.update({"opearUser": newListInfo[0].get('opearUser')})
+    insertData.update({"flashLog": newListInfo[0].get('flashLog')})
+    insertData.update({"flashTime": newListInfo[0].get('flashTime')})
 
     db.insertDbData('web_system_db', 'logs', insertData)
 

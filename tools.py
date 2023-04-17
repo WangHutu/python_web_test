@@ -49,7 +49,7 @@ def restart(arg1, arg2):
     return output.stdout
 
 
-def reimage(arg1, arg2):
+def reimage_test(arg1, arg2):
     # 设置脚本路径和参数
     script_path = './reImage.sh'
     print(f'cmd: sh {script_path} {arg1} {arg2}')
@@ -59,9 +59,9 @@ def reimage(arg1, arg2):
     # 将输出结果发送回前端
     return output.stdout
 
-def reimage2(arg1, arg2):
+def reimage(arg1, arg2):
     #cmd_tmp = ". /group/xbjlab/dphi_edge/workspace/vitis_2022.2/settings64.sh; xsdb /group/xbjlab/dphi_edge/workspace/zboard/board_data/vek280/jtag_boot_linux_no_image.tcl"
     #cmd = '/bin/bash -c "%s"' % cmd_tmp
-    cmd = "/group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive" % (arg1, arg2)
+    cmd = "rm zboard.out.%s; /group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive" % (arg2, arg1, arg2)
     check_call(cmd,shell=True)
-    return 'test'
+    return f'zboard.out.{arg2}'
