@@ -63,5 +63,6 @@ def reimage(arg1, arg2):
     #cmd_tmp = ". /group/xbjlab/dphi_edge/workspace/vitis_2022.2/settings64.sh; xsdb /group/xbjlab/dphi_edge/workspace/zboard/board_data/vek280/jtag_boot_linux_no_image.tcl"
     #cmd = '/bin/bash -c "%s"' % cmd_tmp
     cmd = "rm zboard.out.%s; /group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive" % (arg2, arg1, arg2)
+    print(f'cmd: {cmd}')
     check_call(cmd,shell=True)
     print(f'zboard.out.{arg2}')
