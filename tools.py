@@ -64,4 +64,4 @@ def reimage(arg1, arg2):
     #cmd = '/bin/bash -c "%s"' % cmd_tmp
     cmd = "rm zboard.out.%s; /group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive" % (arg2, arg1, arg2)
     check_call(cmd,shell=True)
-    return f'zboard.out.{arg2}'
+    print(f'zboard.out.{arg2}')

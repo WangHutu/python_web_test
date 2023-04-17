@@ -16,7 +16,7 @@ def restartImage(request):
     if ip and path:
         t = threading.Thread(target=tools.reimage(path, ip))
         t.start()
-        res = tools.reimage(path, ip)
+        # res = tools.reimage(path, ip)
         insertData[0].update({'flashLog': f'zboard.out.{ip}'})
         insertData[0].update({"flashTime": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())})
         logs.insertLogList('flashImage', insertData)
