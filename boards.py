@@ -118,7 +118,9 @@ def delBoardList(request):
     if (not json.loads(request.get_data())):
         return jsonify({"code": 200, "message": "操作失败，缺少相关数据"})
     id = json.loads(request.get_data()).get('id')
-    delData = copy.deepcopy(list(db.getDbData('web_system_db', 'board_list', {"id": id})))
+    opearUser = json.loads(request.get_data()).get('opearUser')
+    delData = list(db.getDbData('web_system_db', 'board_list', {"id": id}))
+    delData[0].update({'opearUser':opearUser})
     state = db.delDbData('web_system_db', 'board_list', {"id": id})
     if state:
         logs.insertLogList('del', delData)
