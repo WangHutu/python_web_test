@@ -25,7 +25,7 @@ def restartImage(request):
                 insertData[0].update({"flashTime": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())})
                 print(insertData, 'insertData')
                 logs.insertLogList('flashImage', insertData)
-                t = threading.Thread(target=tools.reimage(path, ip, item['server']))
+                t = threading.Thread(target=tools.reimage, arge=(path, ip, item['server']))
                 t.start()
                 # res = tools.reimage(path, ip, item['server'])
                 return jsonify({"code": 200, "data": {"restartImage": '' }})
