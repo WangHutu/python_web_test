@@ -84,3 +84,14 @@ def ping_ip(ip):
     else:
         # 如果返回码不为 0，表示 ping 失败，返回 False
         return False
+    
+
+def ping_ip2(ip):
+    # 执行 ping 命令并返回结果
+    cmd = f'ping -c 3 {ip}'
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    output, error = p.communicate()
+    if error:
+        return error.decode()
+    else:
+        return output.decode()
