@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, jsonify
 import os
 import subprocess
 from subprocess import check_call, check_output, CalledProcessError
@@ -92,6 +92,6 @@ def ping_ip2(ip):
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, error = p.communicate()
     if error:
-        return error.decode()
+        return {'error': error.decode()}
     else:
-        return output.decode()
+        return {'success': output.decode()}

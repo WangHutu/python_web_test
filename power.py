@@ -37,6 +37,6 @@ def pingIp(request):
     ip = json.loads(request.get_data()).get('ip')
     if not not ip:
         res = tools.ping_ip2(ip)
-        return jsonify({"code": 200, "data": {"pingIp": res }})
+        return jsonify({"code": 200, "data": res})
     else:
-        return jsonify({"code": 200, "data": {"pingIp": 'ip not found' }})
+        return jsonify({"code": 200, "data": {"pingType":res.type, "pingIp": 'ip not found' }})
