@@ -14,20 +14,17 @@ with open('/group/xbjlab/dphi_edge/workspace/zboard/conf/zynq_hosts.json', 'r', 
 json_file = 'ping_result.json'
 json_path = os.path.join(os.path.dirname(__file__), json_file)
 
-# 循环执行ping操作
-while True:
-    # 记录ping结果的字典
-    result_dict = {}
-    for ip in ip_list:
-        # 使用subprocess模块启动ping命令，并传入参数ip
-        result = subprocess.run(['ping', '-c', '1', ip], capture_output=True, text=True)
-        # 将ping结果记录到result_dict字典中
-        result_dict[ip] = 'success' if '1 received' in result.stdout else 'fail'
-    # 将result_dict字典写入json文件中
-    with open(json_path, 'w') as f:
-        json.dump(result_dict, f)
-    # 暂停10分钟
-    time.sleep(600)
-    # 每天凌晨3点清除json文件
-    if datetime.datetime.now().hour == 3 and datetime.datetime.now().minute == 0:
-        os.remove(json_path)
+
+# 记录ping结果的字典
+result_dict = {}
+for ip in ip_list:
+    # 使用subprocess模块启动ping命令，并传入参数ip
+    result = subprocess.run(['ping', '-c', '1', ip], capture_output=True, text=True)
+    # 将ping结果记录到result_dict字典中
+    result_dict[ip] = 'success' if '1 received' in result.stdout else 'fail'
+# 将result_dict字典写入json文件中
+with open(json_path, 'w') as f:
+    json.dump(result_dict, f)
+# 每天凌晨3点清除json文件
+if datetime.datetime.now().hour == 3 and datetime.datetime.now().minute == 0:
+    os.remove(json_path)
