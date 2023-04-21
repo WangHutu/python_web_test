@@ -33,6 +33,7 @@ def restartBoard(request):
             return jsonify({"code": 200, "data": {"powerList": res }})
     
 
+# 前端不做ping,暂时搁置
 def pingIp(request):
     ip = json.loads(request.get_data()).get('ip')
     if not not ip:
@@ -40,3 +41,9 @@ def pingIp(request):
         return jsonify({"code": 200, "data": res})
     else:
         return jsonify({"code": 200, "data": {"pingType":res.type, "pingIp": 'ip not found' }})
+    
+
+def pingR(request):
+    with open('./ping_result.json', 'r') as f:
+        json_data = json.load(f)
+        return jsonify({"code": 200, "data": json_data})

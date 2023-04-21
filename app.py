@@ -144,7 +144,8 @@ def restartImage():
 # ping ip
 @app.route('/pingIp', methods=['POST'])
 def pingIp():
-    return power.pingIp(request)
+    # return power.pingIp(request)
+    return power.pingR(request)
 
 
 if __name__ == "__main__":
