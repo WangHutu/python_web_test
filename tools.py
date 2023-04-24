@@ -65,7 +65,7 @@ def reimage(arg1, arg2, server):
     if server=='xbjlabdpsvr02':
         cmd = "rm *%s*; /group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive" % (arg2, arg1, arg2)
     else:
-        cmd="rm zboard.out.%s; ssh server; /group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive" % (arg2, arg1, arg2)
+        cmd="rm zboard.out.%s; ssh %s '/group/xbjlab/dphi_edge/workspace/zboard/bin/zboard run-test -m jtag_dual_linux -i %s -e test.sh --ip %s --interactive'" % (arg2, server, arg1, arg2)
     print(f'cmd: {cmd}')
     check_call(cmd,shell=True)
     print(f'zboard.out.{arg2}')
