@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import registerLogin
 import boards
 import admins
@@ -6,9 +6,13 @@ import logs
 import power
 import reimage
 import tools
+import subprocess
+from flask_socketio import SocketIO, emit
+# from flask_sockets import Sockets
+# from subprocess import Popen, PIPE, STDOUT
 
 app = tools.create_flask_app()
- 
+socketio = SocketIO(app)
  
 # 跨域支持
 def after_request(resp):
@@ -148,5 +152,26 @@ def pingIp():
     return power.pingR(request)
 
 
+
+@socketio.on('connect')
+def test_connect():
+    # 客户端连接到服务器
+    print('Client connected')
+
+
+@socketio.on('message')
+def handle_terminal_message(message):
+    # 处理从客户端接收到的消息
+    print('received message: ' + message)
+
+
+@socketio.on('disconnect')
+def test_disconnect():
+    # 客户端从服务器断开连接
+    print('Client disconnected')
+
+
+
 if __name__ == "__main__":
-    app.run()
+    # app.run()
+    socketio.run(app)
