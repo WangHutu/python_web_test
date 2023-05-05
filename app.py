@@ -8,7 +8,7 @@ import reimage
 import tools
 import subprocess
 import sys
-sys.path.append('./venv')
+# sys.path.append('./venv')
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 # from flask_sockets import Sockets
