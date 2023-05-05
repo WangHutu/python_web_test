@@ -7,12 +7,16 @@ import power
 import reimage
 import tools
 import subprocess
+import sys
+sys.path.append('./venv')
 from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 # from flask_sockets import Sockets
 # from subprocess import Popen, PIPE, STDOUT
 
 app = tools.create_flask_app()
-socketio = SocketIO(app)
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
  
 # 跨域支持
 def after_request(resp):
@@ -156,19 +160,20 @@ def pingIp():
 @socketio.on('connect')
 def test_connect():
     # 客户端连接到服务器
-    print('Client connected')
+    print('-----------Client connected------------')
 
 
 @socketio.on('message')
 def handle_terminal_message(message):
     # 处理从客户端接收到的消息
-    print('received message: ' + message)
+    print('-----------received message-----------: ' + message)
+    socketio.emit("message",{"Data":'4564564'})
 
 
 @socketio.on('disconnect')
 def test_disconnect():
     # 客户端从服务器断开连接
-    print('Client disconnected')
+    print('-----------Client disconnected--------')
 
 
 
