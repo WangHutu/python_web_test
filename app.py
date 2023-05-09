@@ -8,15 +8,16 @@ import reimage
 import tools
 import subprocess
 import sys
-# sys.path.append('./venv')
+sys.path.append('./venv')
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 # from flask_sockets import Sockets
 # from subprocess import Popen, PIPE, STDOUT
 
 app = tools.create_flask_app()
-CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+CORS(app, cors_allowed_origins='*', credentials=True)
+# socketio = SocketIO(app, cors_allowed_origins='*', supports_credentials=True)
+socketio = SocketIO(app, cors_allowed_origins='*', async_mode='threading', async_handlers=False)
  
 # 跨域支持
 def after_request(resp):
