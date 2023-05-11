@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>WebSocket Test</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+  </head>
+  <body>
+    <h1>WebSocket Test</h1>
+    <div>
+      <input type="text" id="message-input">
+      <button id="send-button">Send</button>
+    </div>
+    <div id="messages"></div>
+    <script>
+      var socket = io.connect('http://localhost:4200');
+
+      // 发送消息到服务器
+      function sendMessage() {
+        var messageInput = document.getElementById('message-input');
+        var message = messageInput.value;
+        socket.emit('send-message', {data: message});
+        messageInput.value = '';
+      }
+
+      socket.on('my-response', function(data) {
+        var messages = document.getElementById('messages');
+        var message = document.createElement('div');
+        console.log(data.data)
+        message.innerHTML = data.data.data;
+        messages.appendChild(message);
+      });
+
+      // 在按钮点击时发送消息
+      var sendButton = document.getElementById('send-button');
+      sendButton.addEventListener('click', sendMessage);
+      
+    </script>
+  </body>
+</html>

@@ -8,7 +8,7 @@ import db
     # with open('/group/xbjlab/dphi_edge/workspace/zboard/conf/zynq_hosts.json', 'r', encoding='utf-8') as f:
 
 def getPowerList(request):
-    with open('./zynq_hosts.json', 'r', encoding='utf-8') as f:
+    with open('/group/xbjlab/dphi_edge/workspace/zboard/conf/zynq_hosts.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
     return jsonify({"code": 200, "data": {"powerList": data }})
 
