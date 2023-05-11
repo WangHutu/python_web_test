@@ -8,7 +8,7 @@ import reimage
 import tools
 import subprocess
 import sys
-# sys.path.append('./venv')
+sys.path.append('./venv')
 from flask_socketio import SocketIO, emit
 # from flask_cors import CORS
 # from flask_sockets import Sockets
@@ -168,7 +168,11 @@ def test_connect():
 def handle_terminal_message(message):
     # 处理从客户端接收到的消息
     print('-----------received message-----------: ' + message)
-    socketio.emit("message",{"Data":'4564564'})
+    command = message.strip()  # 获取客户端发送的命令并去除前后空格
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+    # 将结果发送回客户端
+    socketio.emit('message', result.stdout)
 
 
 @socketio.on('disconnect')

@@ -18,15 +18,15 @@
       function sendMessage() {
         var messageInput = document.getElementById('message-input');
         var message = messageInput.value;
-        socket.emit('send-message', {data: message});
+        socket.emit('send-message', message);
         messageInput.value = '';
       }
 
       socket.on('my-response', function(data) {
         var messages = document.getElementById('messages');
         var message = document.createElement('div');
-        console.log(data.data)
-        message.innerHTML = data.data.data;
+        console.log(data)
+        message.innerHTML = data;
         messages.appendChild(message);
       });
 
