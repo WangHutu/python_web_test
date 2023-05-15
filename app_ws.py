@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import registerLogin
 import boards
 import admins
@@ -6,11 +6,19 @@ import logs
 import power
 import reimage
 import tools
-
+import subprocess
+import sys
+sys.path.append('./venv')
+from flask_socketio import SocketIO, emit
+# from flask_cors import CORS
+# from flask_sockets import Sockets
+# from subprocess import Popen, PIPE, STDOUT
 
 app = tools.create_flask_app()
-
-
+# CORS(app, cors_allowed_origins='*', credentials=True)
+socketio = SocketIO(app, cors_allowed_origins='*', logger=True, engineio_logger=True)
+# socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading', async_handlers=False)
+ 
 # 跨域支持
 def after_request(resp):
     resp.headers['Access-Control-Allow-Origin'] = '*'
@@ -20,6 +28,7 @@ def after_request(resp):
 @app.route('/login', methods=['POST'])
 def login():
     return registerLogin.login(request)
+    
 
 
 # 注册接口
@@ -56,7 +65,7 @@ def delTypeList():
 @app.route('/getBoardList', methods=['GET'])
 def getBoardList():
     return boards.getBoardList(request)
-
+    
 
 # 开发板列表增加
 @app.route('/insertBoardList', methods=['POST'])
@@ -148,5 +157,31 @@ def pingIp():
     return power.pingR(request)
 
 
+
+@socketio.on('connect')
+def test_connect():
+    # 客户端连接到服务器
+    print('-----------Client connected------------')
+
+
+@socketio.on('message')
+def handle_terminal_message(message):
+    # 处理从客户端接收到的消息
+    print('-----------received message-----------: ' + message)
+    command = message.strip()  # 获取客户端发送的命令并去除前后空格
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+    # 将结果发送回客户端
+    socketio.emit('message', result.stdout)
+
+
+@socketio.on('disconnect')
+def test_disconnect():
+    # 客户端从服务器断开连接
+    print('-----------Client disconnected--------')
+
+
+
 if __name__ == "__main__":
-    app.run()
+    # app.run(port=5000)
+    socketio.run(app, port=5000)
