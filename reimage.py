@@ -46,8 +46,11 @@ def getFlashHistory(request):
                     item = data[key]
             if(not not item):
                 time=tools.flashHistory(ip, item['server'])
-                print(time, '0000000')
-                return jsonify({"code": 200, "data": {"flashHistory": time }})
+                if not not time:
+                    flashTime = time
+                else:
+                    flashTime = 'NONE'
+                return jsonify({"code": 200, "data": {"flashHistory": flashTime }})
             else:
                 res = 'item data does not exist'
                 return jsonify({"code": 200, "data": {"powerList": res }})

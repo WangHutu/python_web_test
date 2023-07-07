@@ -76,9 +76,12 @@ def flashHistory(ip, server):
     print("fileName", fileName)
     if server=='xbjlabdpsvr02':
         path = "/proj/rdi/staff/runfengw/html/xbj_py/%s" % (fileName)
-        modified_time = os.path.getmtime(path)
-        modified_time = datetime.datetime.fromtimestamp(modified_time)
-        return modified_time
+        if(os.path.exists(path)):
+            modified_time = os.path.getmtime(path)
+            modified_time = datetime.datetime.fromtimestamp(modified_time)
+            return modified_time
+        else:
+            return 'file not exist'
     else:
         remote_cmd = f"stat -c %y /tmp/{fileName}"
         cmd = f"ssh {server} '{remote_cmd}'"
