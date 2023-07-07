@@ -39,7 +39,7 @@ def restartImage(request):
 def getFlashHistory(request):
     ip = json.loads(request.get_data()).get('ip')
     if ip:
-        with open('./zynq_hosts.json', 'r', encoding='utf-8') as f:
+        with open('/group/xbjlab/dphi_edge/workspace/zboard/conf/zynq_hosts.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
             for key in data.keys():
                 if key == ip:
