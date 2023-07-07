@@ -76,11 +76,15 @@ def flashHistory(ip, server):
     print("fileName", fileName)
     if server=='xbjlabdpsvr02':
         path = "/proj/rdi/staff/runfengw/html/xbj_py/%s" % (fileName)
+        modified_time = os.path.getmtime(path)
+        modified_time = datetime.datetime.fromtimestamp(modified_time)
+        return modified_time
     else:
-        path = "/tmp/%s" % (fileName)
-    modified_time = os.path.getmtime(path)
-    modified_time = datetime.datetime.fromtimestamp(modified_time)
-    return modified_time
+        remote_cmd = f"stat -c %y /tmp/{fileName}"
+        cmd = f"ssh {server} '{remote_cmd}'"
+        result = subprocess.check_output(cmd, shell=True).decode().strip()
+        return result
+    
 
 
 
