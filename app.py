@@ -140,6 +140,11 @@ def restartBoard():
 def restartImage():
     return reimage.restartImage(request)
 
+# getFlashHistory
+@app.route('/getFlashHistory', methods=['POST'])
+def getFlashHistory():
+    return reimage.getFlashHistory(request)
+
 
 # ping ip
 @app.route('/pingIp', methods=['POST'])

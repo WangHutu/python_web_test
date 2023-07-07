@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import os
+import datetime
 import subprocess
 from subprocess import check_call, check_output, CalledProcessError
 
@@ -69,6 +70,17 @@ def reimage(arg1, arg2, server):
     print(f'cmd: {cmd}')
     check_call(cmd,shell=True)
     print(f'zboard.out.{arg2}')
+
+def flashHistory(ip, server):
+    fileName = "zboard.out.%s" % (ip)
+    print("fileName", fileName)
+    if server=='xbjlabdpsvr02':
+        path = "/proj/rdi/staff/runfengw/html/xbj_py/%s" % (fileName)
+    else:
+        path = "/tmp/%s" % (fileName)
+    modified_time = os.path.getmtime(path)
+    modified_time = datetime.datetime.fromtimestamp(modified_time)
+    return modified_time
 
 
 
