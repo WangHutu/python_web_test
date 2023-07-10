@@ -94,6 +94,31 @@ def flashHistory(ip, server):
             return modified_time
         else:
             return 'NONE'
+        
+
+def flashLog(ip, server):
+    fileName = "zboard.out.%s" % (ip)
+    print("fileName", fileName)
+    if server=='xbjlabdpsvr02':
+        path = "/proj/rdi/staff/runfengw/html/xbj_py/%s" % (fileName)
+        if(os.path.exists(path)):
+            with open(path, 'r') as file:
+                content = file.read()
+            return content
+        else:
+            return 'NONE'
+    else:
+        path = f"/tmp/{fileName}"
+        exit_cmd = f"[ -f {path} ] && echo 'file exists' || echo 'Flase' "
+        ssh_cmd = f"ssh {server} '{exit_cmd}'"
+        exitState = subprocess.check_output(ssh_cmd, shell=True).decode().strip()
+        if exitState == 'file exists':
+            remote_cmd = f"cat {path}"
+            cmd = f"ssh {server} '{remote_cmd}'"
+            content = subprocess.check_output(cmd, shell=True).decode()
+            return content
+        else:
+            return 'NONE'
     
 
 

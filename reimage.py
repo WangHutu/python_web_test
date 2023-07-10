@@ -57,3 +57,26 @@ def getFlashHistory(request):
     else:
         res = 'ip not found'
         return jsonify({"code": 200, "data": {"flashHistory": res }})
+
+
+def getFlashLog(request):
+    ip = json.loads(request.get_data()).get('ip')
+    if ip:
+        with open('/group/xbjlab/dphi_edge/workspace/zboard/conf/zynq_hosts.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            for key in data.keys():
+                if key == ip:
+                    item = data[key]
+            if(not not item):
+                log =tools.flashLog(ip, item['server'])
+                if not not log:
+                    flashLog = log
+                else:
+                    flashLog = 'NONE'
+                return jsonify({"code": 200, "data": {"flashLog": flashLog }})
+            else:
+                res = 'NONE'
+                return jsonify({"code": 200, "data": {"flashLog": res }})
+    else:
+        res = 'ip not found'
+        return jsonify({"code": 200, "data": {"flashLog": res }})

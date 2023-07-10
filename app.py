@@ -145,6 +145,11 @@ def restartImage():
 def getFlashHistory():
     return reimage.getFlashHistory(request)
 
+# getFlashLog
+@app.route('/getFlashLog', methods=['POST'])
+def getFlashLog():
+    return reimage.getFlashLog(request)
+
 
 # ping ip
 @app.route('/pingIp', methods=['POST'])
