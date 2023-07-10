@@ -83,10 +83,17 @@ def flashHistory(ip, server):
         else:
             return 'file not exist'
     else:
-        remote_cmd = f"stat -c %y /tmp/{fileName}"
-        cmd = f"ssh {server} '{remote_cmd}'"
-        result = subprocess.check_output(cmd, shell=True).decode().strip()
-        return result
+        path = f"/tmp/{fileName}"
+        exit_cmd = f"[ -f {path} ] && echo 'file exists' || echo 'Flase' "
+        ssh_cmd = f"ssh {server} '{exit_cmd}'"
+        exitState = subprocess.check_output(ssh_cmd, shell=True).decode().strip()
+        if exitState == 'file exists':
+            remote_cmd = f"stat -c %y {path}"
+            cmd = f"ssh {server} '{remote_cmd}'"
+            modified_time = subprocess.check_output(cmd, shell=True).decode().strip()
+            return modified_time
+        else:
+            return 'file not exist'
     
 
 
