@@ -81,7 +81,7 @@ def flashHistory(ip, server):
             modified_time = datetime.datetime.fromtimestamp(modified_time)
             return modified_time
         else:
-            return 'file not exist'
+            return 'NONE'
     else:
         path = f"/tmp/{fileName}"
         exit_cmd = f"[ -f {path} ] && echo 'file exists' || echo 'Flase' "
@@ -93,7 +93,7 @@ def flashHistory(ip, server):
             modified_time = subprocess.check_output(cmd, shell=True).decode().strip()
             return modified_time
         else:
-            return 'file not exist'
+            return 'NONE'
     
 
 
